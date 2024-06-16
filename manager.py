@@ -2,17 +2,27 @@ import os
 from pick import pick
 
 def fileSelector():
+    global option
+    file = ''
     files = []
     for file in os.listdir('.'):
         if file.endswith('.txt'):
             files.append(file)
     # If the files exist, display the selection
-    if files:
+    if file:
         title = 'Please select a file to open'
         option, index = pick(files, title)
         print(option, index)
+    # If user select file, he has opportunity to add new content to exist file
+        if option:
+            editSelectedFile()
     else:
         print('Files not exists')
+def editSelectedFile():
+    selectedFile = open(option, "a")
+    selectedFile.write(input("Let's write some content to your file :) \n"))
+    selectedFile.write("\n")
+    selectedFile.close()
 def createNotes():
     text = input('Do u want to create a new file? (Y/N)\n')
     if text.lower() == "y":
